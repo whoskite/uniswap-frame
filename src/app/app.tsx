@@ -2,12 +2,10 @@
 
 import dynamic from "next/dynamic";
 
-const Demo = dynamic(() => import("~/components/Demo"), {
+const TokenSwap = dynamic(() => import("~/components/TokenSwap"), {
   ssr: false,
 });
 
-export default function App(
-  { title }: { title?: string } = { title: "Frames v2 Demo" }
-) {
-  return <Demo title={title} />;
+export default function App() {
+  return <TokenSwap />;
 }

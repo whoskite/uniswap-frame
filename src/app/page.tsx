@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import App from "./app";
+import App from "~/app/app";
 
 const appUrl = process.env.NEXT_PUBLIC_URL;
 
@@ -7,10 +7,10 @@ const frame = {
   version: "next",
   imageUrl: `${appUrl}/opengraph-image`,
   button: {
-    title: "Launch Frame",
+    title: "Launch Swap",
     action: {
       type: "launch_frame",
-      name: "Farcaster Frames v2 Demo",
+      name: "Token Swap Demo",
       url: appUrl,
       splashImageUrl: `${appUrl}/splash.png`,
       splashBackgroundColor: "#f7f7f7",
@@ -22,10 +22,10 @@ export const revalidate = 300;
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Farcaster Frames v2 Demo",
+    title: "Token Swap Demo",
     openGraph: {
-      title: "Farcaster Frames v2 Demo",
-      description: "A Farcaster Frames v2 demo app.",
+      title: "Token Swap Demo",
+      description: "A simple token swap interface using Frames v2.",
     },
     other: {
       "fc:frame": JSON.stringify(frame),
@@ -34,5 +34,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function Home() {
-  return (<App />);
+  return <App />;
 }
