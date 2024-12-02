@@ -6,6 +6,6 @@ const TokenSwap = dynamic(() => import("~/components/TokenSwap"), {
   ssr: false,
 });
 
-export default function App() {
-  return <TokenSwap />;
+export default function App({ token }: { token: string; }) {
+  return <TokenSwap token={token} />;
 }

@@ -40,19 +40,29 @@ const DEMO_TOKENS: Token[] = [
     address: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
     decimals: 6,
   },
+  {
+    symbol: "CLANKER",
+    name: "Clanker",
+    image:
+      "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/295953fa-15ed-4d3c-241d-b6c1758c6200/original",
+    address: "0x1bc0c42215582d5A085795f4baDbaC3ff36d1Bcb",
+    decimals: 18,
+  },
 ];
 
 const AFFILIATE_FEE = 25;
 const PROTOCOL_GUILD_ADDRESS = "0x32e3C7fD24e175701A35c224f2238d18439C7dBC";
 
-export default function TokenSwap() {
+export default function TokenSwap({ token }: { token: string }) {
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
 
   const sellToken = ETH;
   const [sellAmount, setSellAmount] = useState("");
 
   const [buyAmount, setBuyAmount] = useState("");
-  const [buyToken, setBuyToken] = useState<Token>(DEMO_TOKENS[0]);
+  const [buyToken, setBuyToken] = useState<Token>(
+    token === "clanker" ? DEMO_TOKENS[1] : DEMO_TOKENS[0]
+  );
 
   const [isFinalized, setIsFinalized] = useState(false);
   const [quote, setQuote] = useState<QuoteResponse>();
