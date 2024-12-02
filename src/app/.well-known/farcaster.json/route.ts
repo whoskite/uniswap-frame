@@ -5,13 +5,13 @@ export async function GET() {
     accountAssociation: {
       header:
         "eyJmaWQiOjM2MjEsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgyY2Q4NWEwOTMyNjFmNTkyNzA4MDRBNkVBNjk3Q2VBNENlQkVjYWZFIn0",
-      payload: "eyJkb21haW4iOiJmcmFtZXMtdjIudmVyY2VsLmFwcCJ9",
+      payload: "eyJkb21haW4iOiJmcmFtZXMtdjItc3dhcC1kZW1vLnZlcmNlbC5hcHAifQ",
       signature:
-        "MHhiNDIwMzQ1MGZkNzgzYTExZjRiOTllZTFlYjA3NmMwOTdjM2JkOTY1NGM2ODZjYjkyZTAyMzk2Y2Q0YjU2MWY1MjY5NjI5ZGQ5NTliYjU0YzEwOGI4OGVmNjdjMTVlZTdjZDc2YTRiMGU5NzkzNzA3YzkxYzFkOWFjNTg0YmQzNjFi",
+        "MHgxMzE0NDBjODMyMWRkM2UzNmQ3OWFiNDYxYmNiZThiOTM0NGNkOGZkNmVhMmVlNmY3YTY4NWJiNjMzMTYyNGNjNTczNjUyNTlhNzE5MTJkZDM4NWVmZmM5MWMwZmY1ZWVlMzYwNGUzYWNiZTI3MTQzYzIwYTRjMDBlNjgwZjBmNzFj",
     },
     frame: {
       version: "0.0.0",
-      name: "Frames v2 Demo",
+      name: "Simple Swap Demo",
       iconUrl: `${appUrl}/icon.png`,
       splashImageUrl: `${appUrl}/splash.png`,
       splashBackgroundColor: "#f7f7f7",
