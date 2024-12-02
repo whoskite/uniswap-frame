@@ -18,7 +18,7 @@ export async function generateMetadata({
 
   const frame = {
     version: "next",
-    imageUrl: `${appUrl}/opengraph-image`,
+    imageUrl: `${appUrl}/opengraph-image?token=${token}`,
     button: {
       title: `Swap ETH/${token === "clanker" ? "CLANKER" : "USDC"}`,
       action: {

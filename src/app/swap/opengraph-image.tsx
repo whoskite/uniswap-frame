@@ -14,7 +14,7 @@ export default async function Image() {
   return new ImageResponse(
     (
       <div tw="h-full w-full flex flex-col justify-center items-center relative bg-white">
-        <h1 tw="text-6xl">Swap Frame</h1>
+        <h1 tw="text-6xl">Swap Frame Demo</h1>
       </div>
     ),
     {

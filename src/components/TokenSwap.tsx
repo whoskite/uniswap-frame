@@ -130,6 +130,12 @@ export default function TokenSwap({ token }: { token: string }) {
     [buyToken.decimals, setBuyAmount, setFetchPriceError]
   );
 
+  const linkToBaseScan = useCallback((hash?: string) => {
+    if (hash) {
+      sdk.actions.openUrl(`https://basescan.org/tx/${hash}`);
+    }
+  }, []);
+
   const fetchQuote = useCallback(
     async (params: unknown) => {
       setIsPriceLoading(true);
@@ -285,16 +291,17 @@ export default function TokenSwap({ token }: { token: string }) {
           </div>
         )}
         {isConfirming && (
-          <div className="text-orange-500 text-center">
+          <div className="text-orange-500 text-center mt-4">
             ⏳ Waiting for confirmation...
           </div>
         )}
         {isConfirmed && (
-          <div className=" text-green-500 text-center">
+          <div
+            className="text-green-500 text-center mt-4"
+            onClick={() => linkToBaseScan(hash)}
+          >
             <p>🎉 Transaction Confirmed!</p>
-            <p>
-              <a href={`https://basescan.org/tx/${hash}`}>View on Basescan</a>
-            </p>
+            <p>Tap to View on Basescan</p>
           </div>
         )}
 
