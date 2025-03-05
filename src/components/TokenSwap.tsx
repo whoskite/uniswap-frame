@@ -41,11 +41,11 @@ const DEMO_TOKENS: Token[] = [
     decimals: 6,
   },
   {
-    symbol: "CLANKER",
-    name: "Clanker",
+    symbol: "DON",
+    name: "DON",
     image:
       "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/295953fa-15ed-4d3c-241d-b6c1758c6200/original",
-    address: "0x1bc0c42215582d5A085795f4baDbaC3ff36d1Bcb",
+    address: "0x3801672b93E16A25120995b7201add19dC46fA22",
     decimals: 18,
   },
 ];
