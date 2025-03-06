@@ -37,7 +37,7 @@ const DEMO_TOKENS: Token[] = [
     name: "USD Coin",
     image:
       "https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png",
-    address: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    address: "0x3801672b93E16A25120995b7201add19dC46fA22",
     decimals: 6,
   },
   {
@@ -67,7 +67,7 @@ export default function TokenSwap({ token }: { token: string }) {
   const [isFinalized, setIsFinalized] = useState(false);
   const [quote, setQuote] = useState<QuoteResponse>();
 
-  const [fetchPriceError, setFetchPriceError] = useState([]);
+  const [fetchPriceError, setFetchPriceError] = useState<string[]>([]);
 
   const { address, isConnected } = useAccount();
 
@@ -152,14 +152,45 @@ export default function TokenSwap({ token }: { token: string }) {
 
   const executeSwap = useCallback(() => {
     if (quote) {
-      sendTransaction({
-        gas: quote.transaction.gas ? BigInt(quote.transaction.gas) : undefined,
-        to: quote.transaction.to,
-        data: quote.transaction.data,
-        value: BigInt(quote.transaction.value),
-      });
+      try {
+        console.log("Executing swap with quote:", quote);
+        
+        // Check if we're in a Farcaster Frame environment
+        const isFrameEnvironment = typeof window !== 'undefined' && 
+          window.location.href.includes('warpcast.com');
+        
+        if (isFrameEnvironment) {
+          // In Farcaster Frame, open a link to complete the transaction
+          const baseUrl = "https://app.uniswap.org/swap";
+          const params = new URLSearchParams({
+            inputCurrency: sellToken.address,
+            outputCurrency: buyToken.address,
+            exactAmount: sellAmount,
+            exactField: 'input'
+          });
+          
+          const swapUrl = `${baseUrl}?${params.toString()}`;
+          console.log("Opening external swap URL:", swapUrl);
+          sdk.actions.openUrl(swapUrl);
+          return;
+        }
+        
+        // Otherwise proceed with normal transaction
+        sendTransaction({
+          gas: quote.transaction.gas ? BigInt(quote.transaction.gas) : undefined,
+          to: quote.transaction.to,
+          data: quote.transaction.data,
+          value: BigInt(quote.transaction.value),
+          chainId: 8453 // Explicitly set the chain ID for Base
+        });
+      } catch (error) {
+        console.error("Error executing swap:", error);
+        // Display a more user-friendly error
+        const errorMessage = error instanceof Error ? error.message : "Unknown error during swap";
+        setFetchPriceError([errorMessage]);
+      }
     }
-  }, [quote, sendTransaction]);
+  }, [quote, sendTransaction, setFetchPriceError, sellToken.address, buyToken.address, sellAmount, sdk.actions]);
 
   useEffect(() => {
     const params = {

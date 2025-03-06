@@ -142,25 +142,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@farcaster/frame-core@npm:^0.0.4":
-  version: 0.0.4
-  resolution: "@farcaster/frame-core@npm:0.0.4"
+"@farcaster/frame-core@npm:0.0.29":
+  version: 0.0.29
+  resolution: "@farcaster/frame-core@npm:0.0.29"
   dependencies:
-    ox: "npm:^0.1.6"
-  checksum: 10c0/5198496f404ffcb9731194d111a1aa9b6af10a2e73543934a4fc596ad358d528a27ed2499a73761e01b923e946cdb863c88a1f6388ec7db8d836fcfdfde27709
+    ox: "npm:^0.4.4"
+    zod: "npm:^3.24.1"
+  checksum: 10c0/f9ce2487a2bbe1dc81dd47605e0d6e640f9184981365b183d12c032a2983e7ee50549d2c1ad2a7a94c46da5582bcc46f56eecb8b734f125423a30507da474dc7
   languageName: node
   linkType: hard
 
-"@farcaster/frame-sdk@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "@farcaster/frame-sdk@npm:0.0.2"
+"@farcaster/frame-sdk@npm:^0.0.31":
+  version: 0.0.31
+  resolution: "@farcaster/frame-sdk@npm:0.0.31"
   dependencies:
-    "@farcaster/frame-core": "npm:^0.0.4"
+    "@farcaster/frame-core": "npm:0.0.29"
     comlink: "npm:^4.4.2"
     eventemitter3: "npm:^5.0.1"
-  peerDependencies:
-    ox: ^0.2.2
-  checksum: 10c0/60b2be4659dbd9eb2b7cd6579df071203faf679f742f0c07e18c8048c6dafd3eb74aae9b66e22b9c4a01c7ac5c45e9c69233c041d9b15eded9b6a458f03eb965
+    ox: "npm:^0.4.4"
+  checksum: 10c0/32b9d4722a405e41644b7913d92733bc1c9a6935c3ab0488106d0d21aee8028bb4b1c072f4847e795699a83d215fd5f7ac86d3d1c0a003f917466a0891257af6
   languageName: node
   linkType: hard
 
@@ -3730,7 +3730,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "frames-v2-demo@workspace:."
   dependencies:
-    "@farcaster/frame-sdk": "npm:^0.0.2"
+    "@farcaster/frame-sdk": "npm:^0.0.31"
     "@tanstack/react-query": "npm:^5.61.0"
     "@types/node": "npm:^20"
     "@types/qs": "npm:^6.9.17"
@@ -5506,9 +5506,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ox@npm:^0.1.6":
-  version: 0.1.8
-  resolution: "ox@npm:0.1.8"
+"ox@npm:^0.4.4":
+  version: 0.4.4
+  resolution: "ox@npm:0.4.4"
   dependencies:
     "@adraffy/ens-normalize": "npm:^1.10.1"
     "@noble/curves": "npm:^1.6.0"
@@ -5522,7 +5522,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/f107c0e27767e2d293ea1201729695e449b5c2be2a10b4840c4d0fb3ed642a42792750e55afca1ba475868d50ad8a2651c511c04fddebdc727e512903030218d
+  checksum: 10c0/ce1539ec41c97f6d8386ea8f0cdd85d4af025d3b7a6762607aa1a6545f550ca637abba8c9be4b26f6bf2136f16ccd579454e6976ee06ddde7225ac8fcfd4254d
   languageName: node
   linkType: hard
 
@@ -7681,6 +7681,13 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: 10c0/dceb44c28578b31641e13695d200d34ec4ab3966a5729814d5445b194933c096b7ced71494ce53a0e8820685d1d010df8b2422e5bf2cdea7e469d97ffbea306f
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.24.1":
+  version: 3.24.2
+  resolution: "zod@npm:3.24.2"
+  checksum: 10c0/c638c7220150847f13ad90635b3e7d0321b36cce36f3fc6050ed960689594c949c326dfe2c6fa87c14b126ee5d370ccdebd6efb304f41ef5557a4aaca2824565
   languageName: node
   linkType: hard
 
