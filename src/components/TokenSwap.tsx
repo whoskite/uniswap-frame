@@ -6,6 +6,7 @@ import {
   useAccount,
   useSendTransaction,
   useWaitForTransactionReceipt,
+  useBalance,
 } from "wagmi";
 import Image from "next/image";
 import { parseUnits, formatUnits, BaseError } from "viem";
@@ -43,8 +44,7 @@ const DEMO_TOKENS: Token[] = [
   {
     symbol: "DON",
     name: "DON",
-    image:
-      "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/295953fa-15ed-4d3c-241d-b6c1758c6200/original",
+    image: "/COMING SOON (2).png",
     address: "0x3801672b93E16A25120995b7201add19dC46fA22",
     decimals: 18,
   },
@@ -70,6 +70,11 @@ export default function TokenSwap({ token }: { token: string }) {
   const [fetchPriceError, setFetchPriceError] = useState<string[]>([]);
 
   const { address, isConnected } = useAccount();
+  
+  // Add balance hooks
+  const { data: ethBalance } = useBalance({
+    address,
+  });
 
   const parsedSellAmount = sellAmount
     ? parseUnits(sellAmount, sellToken.decimals).toString()
@@ -232,119 +237,150 @@ export default function TokenSwap({ token }: { token: string }) {
 
   return (
     <div className="w-[300px] mx-auto py-4 px-2">
-      <div className="mb-4">
+      <div className="mb-4 space-y-2">
         {address && (
-          <div className="text-sm text-gray-500 text-right">
-            {truncateAddress(address)}
-          </div>
+          <>
+            <div className="text-sm text-gray-500 text-right flex justify-between items-center">
+              <span className="text-gray-600 dark:text-gray-400">Wallet:</span>
+              <span>{truncateAddress(address)}</span>
+            </div>
+            <div className="text-sm text-right flex justify-between items-center">
+              <span className="text-gray-600 dark:text-gray-400">Balance:</span>
+              <span>{ethBalance?.formatted || '0'} {ethBalance?.symbol}</span>
+            </div>
+          </>
         )}
       </div>
 
       <div className="space-y-4">
         {/* Sell Token Input */}
-        <div className="relative">
-          <input
-            type="number"
-            inputMode="decimal"
-            value={sellAmount}
-            onChange={(e) => setSellAmount(e.target.value)}
-            placeholder="0.0"
-            className="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800"
-          />
-          <div className="absolute right-2 top-2 flex items-center gap-2 bg-white dark:bg-gray-700 px-2 py-1 rounded-md">
-            <Image
-              src={ETH.image}
-              alt={ETH.symbol}
-              width={100}
-              height={100}
-              className="w-6 h-6 rounded-full"
+        <div className="space-y-1">
+          <label className="text-sm text-gray-600 dark:text-gray-400">You Pay</label>
+          <div className="relative">
+            <input
+              type="number"
+              inputMode="decimal"
+              value={sellAmount}
+              onChange={(e) => setSellAmount(e.target.value)}
+              placeholder="0.0"
+              className="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800"
             />
-            <div className="bg-transparent border-none outline-none">
-              {ETH.symbol}
+            <div className="absolute right-2 top-2 flex items-center gap-2 bg-white dark:bg-gray-700 px-2 py-1 rounded-md">
+              <Image
+                src={ETH.image}
+                alt={ETH.symbol}
+                width={100}
+                height={100}
+                className="w-6 h-6 rounded-full"
+              />
+              <div className="bg-transparent border-none outline-none">
+                {ETH.symbol}
+              </div>
             </div>
+            {ethBalance && (
+              <div className="absolute left-2 -bottom-6 text-xs text-gray-500">
+                Max: {ethBalance.formatted} {ethBalance.symbol}
+              </div>
+            )}
           </div>
         </div>
 
         {/* Buy Token Input */}
-        <div className="relative">
-          <input
-            type="number"
-            inputMode="decimal"
-            value={buyAmount}
-            onChange={(e) => setBuyAmount(e.target.value)}
-            placeholder="0.0"
-            className="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800"
-          />
-          {isPriceLoading && (
-            <div className="absolute inset-0 flex items-center justify-center rounded-md pl-4">
-              <div className="w-4 h-4 border-2 border-[#7C65C1] border-t-transparent rounded-full animate-spin" />
-            </div>
-          )}
-          <div className="absolute right-2 top-2 flex items-center gap-2 bg-white dark:bg-gray-700 px-2 py-1 rounded-md">
-            <Image
-              src={buyToken.image}
-              alt={buyToken.symbol}
-              width={100}
-              height={100}
-              className="w-6 h-6 rounded-full"
+        <div className="space-y-1">
+          <label className="text-sm text-gray-600 dark:text-gray-400">You Receive</label>
+          <div className="relative">
+            <input
+              type="number"
+              inputMode="decimal"
+              value={buyAmount}
+              onChange={(e) => setBuyAmount(e.target.value)}
+              placeholder="0.0"
+              className="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800"
             />
-            <select
-              value={buyToken.symbol}
-              onChange={(e) =>
-                setBuyToken(
-                  DEMO_TOKENS.find((t) => t.symbol === e.target.value) ||
-                    DEMO_TOKENS[1]
-                )
-              }
-              className="bg-transparent border-none outline-none"
-            >
-              {DEMO_TOKENS.map((token) => (
-                <option key={token.symbol} value={token.symbol}>
-                  {token.symbol}
-                </option>
-              ))}
-            </select>
+            {isPriceLoading && (
+              <div className="absolute inset-0 flex items-center justify-center rounded-md pl-4 bg-gray-100/50 dark:bg-gray-800/50">
+                <div className="w-4 h-4 border-2 border-[#7C65C1] border-t-transparent rounded-full animate-spin" />
+              </div>
+            )}
+            <div className="absolute right-2 top-2 flex items-center gap-2 bg-white dark:bg-gray-700 px-2 py-1 rounded-md">
+              <Image
+                src={buyToken.image}
+                alt={buyToken.symbol}
+                width={100}
+                height={100}
+                className="w-6 h-6 rounded-full"
+              />
+              <select
+                value={buyToken.symbol}
+                onChange={(e) =>
+                  setBuyToken(
+                    DEMO_TOKENS.find((t) => t.symbol === e.target.value) ||
+                      DEMO_TOKENS[1]
+                  )
+                }
+                className="bg-transparent border-none outline-none dark:text-white"
+              >
+                {DEMO_TOKENS.map((token) => (
+                  <option key={token.symbol} value={token.symbol}>
+                    {token.symbol}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
+
+        {quote && (
+          <div className="bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-gray-600 dark:text-gray-400">Minimum received:</span>
+              <span>{formatUnits(BigInt(quote.minBuyAmount), buyToken.decimals)} {buyToken.symbol}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600 dark:text-gray-400">Network:</span>
+              <span>Base</span>
+            </div>
+          </div>
+        )}
 
         <Button
           onClick={isFinalized ? executeSwap : finalize}
           disabled={!isConnected || !sellAmount || !buyAmount || isPending}
+          className="w-full"
         >
-          {isConnected ? (isFinalized ? "Confirm" : "Swap") : "Connect Wallet"}
+          {!isConnected 
+            ? "Connect Wallet" 
+            : isPending 
+              ? "Confirming..." 
+              : isFinalized 
+                ? "Confirm Swap" 
+                : "Review Swap"}
         </Button>
 
-        {quote && (
-          <div>
-            Receive at least:{" "}
-            {formatUnits(BigInt(quote.minBuyAmount), buyToken.decimals)}{" "}
-            {buyToken.symbol}
-          </div>
-        )}
         {isConfirming && (
-          <div className="text-orange-500 text-center mt-4">
+          <div className="text-orange-500 text-center mt-4 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
             ⏳ Waiting for confirmation...
           </div>
         )}
         {isConfirmed && (
           <div
-            className="text-green-500 text-center mt-4"
+            className="text-green-500 text-center mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg cursor-pointer"
             onClick={() => linkToBaseScan(hash)}
           >
             <p>🎉 Transaction Confirmed!</p>
-            <p>Tap to View on Basescan</p>
+            <p className="text-sm">Tap to View on Basescan</p>
           </div>
         )}
 
         {fetchPriceError.length > 0 && (
-          <div className="text-red-500 text-sm mt-2">
+          <div className="text-red-500 text-sm mt-2 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
             {fetchPriceError.map((error, index) => (
               <div key={index}>{error}</div>
             ))}
           </div>
         )}
         {error && (
-          <div className="text-red-500 text-sm mt-2">
+          <div className="text-red-500 text-sm mt-2 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
             Error: {(error as BaseError).shortMessage || error.message}
           </div>
         )}
